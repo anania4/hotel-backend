@@ -14,6 +14,9 @@ export interface Config {
     users: User;
     media: Media;
     room: Room;
+    facilities: Facility;
+    categories: Category;
+    bookings: Booking;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -23,6 +26,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     room: RoomSelect<false> | RoomSelect<true>;
+    facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    bookings: BookingsSelect<false> | BookingsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -101,8 +107,9 @@ export interface Media {
  */
 export interface Room {
   id: string;
+  roomNumber: number;
   title: string;
-  content?: {
+  description?: {
     root: {
       type: string;
       children: {
@@ -117,13 +124,66 @@ export interface Room {
     };
     [k: string]: unknown;
   } | null;
-  facilities?:
-    | ('wifi' | 'coffee' | 'bath' | 'parking_space' | 'swimming_pool' | 'breakfast' | 'gym' | 'drinks')[]
+  category: string | Category;
+  facilities?: (string | Facility)[] | null;
+  size: number;
+  maxPerson: number;
+  price: number;
+  availability?: boolean | null;
+  images?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
     | null;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    metaKeywords?: string | null;
+  };
+  status?: ('available' | 'occupied' | 'maintenance') | null;
+  currentBooking?: (string | null) | Booking;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  name: string;
+  description?: string | null;
+  price: number;
   size?: number | null;
-  maxPerson?: number | null;
-  price?: number | null;
-  images?: (string | null) | Media;
+  totalRooms: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities".
+ */
+export interface Facility {
+  id: string;
+  name: string;
+  description?: string | null;
+  icon?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bookings".
+ */
+export interface Booking {
+  id: string;
+  guestName: string;
+  guestEmail: string;
+  room: string | Room;
+  checkIn: string;
+  checkOut: string;
+  status?: ('pending' | 'confirmed' | 'cancelled') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -145,6 +205,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'room';
         value: string | Room;
+      } | null)
+    | ({
+        relationTo: 'facilities';
+        value: string | Facility;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'bookings';
+        value: string | Booking;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -226,13 +298,68 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "room_select".
  */
 export interface RoomSelect<T extends boolean = true> {
+  roomNumber?: T;
   title?: T;
-  content?: T;
+  description?: T;
+  category?: T;
   facilities?: T;
   size?: T;
   maxPerson?: T;
   price?: T;
-  images?: T;
+  availability?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        metaKeywords?: T;
+      };
+  status?: T;
+  currentBooking?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "facilities_select".
+ */
+export interface FacilitiesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  price?: T;
+  size?: T;
+  totalRooms?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bookings_select".
+ */
+export interface BookingsSelect<T extends boolean = true> {
+  guestName?: T;
+  guestEmail?: T;
+  room?: T;
+  checkIn?: T;
+  checkOut?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }
