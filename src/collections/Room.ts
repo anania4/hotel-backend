@@ -4,16 +4,9 @@ export const Room: CollectionConfig = {
   slug: 'room',
   access: {
     read: () => true,
-    readVersions: () => true
+    readVersions: () => true,
   },
   fields: [
-    {
-      name: 'roomNumber',
-      type: 'number',
-      required: true,
-      unique: true,
-      label: 'Room Number',
-    },
     {
       name: 'title',
       type: 'text',
@@ -55,12 +48,7 @@ export const Room: CollectionConfig = {
       defaultValue: 100,
       validate: (price: any) => price >= 0 || 'Price must be a positive value',
     },
-    {
-      name: 'availability',
-      type: 'checkbox',
-      label: 'Is Available?',
-      defaultValue: true,
-    },
+
     {
       name: 'images',
       type: 'array',
@@ -72,32 +60,6 @@ export const Room: CollectionConfig = {
           required: true,
         },
       ],
-    },
-    {
-      name: 'seo',
-      type: 'group',
-      fields: [
-        { name: 'metaTitle', type: 'text' },
-        { name: 'metaDescription', type: 'textarea' },
-        { name: 'metaKeywords', type: 'text' },
-      ],
-    },
-    {
-      name: 'status',
-      type: 'select',
-      options: [
-        { label: 'Available', value: 'available' },
-        { label: 'Occupied', value: 'occupied' },
-        { label: 'Maintenance', value: 'maintenance' },
-      ],
-      defaultValue: 'available',
-      label: 'Room Status',
-    },
-    {
-      name: 'currentBooking',
-      type: 'relationship',
-      relationTo: 'bookings',
-      label: 'Current Booking',
     },
   ],
 }

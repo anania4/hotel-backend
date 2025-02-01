@@ -10,22 +10,6 @@ export const Categories: CollectionConfig = {
       unique: true,
     },
     {
-      name: 'description',
-      type: 'textarea',
-    },
-    {
-      name: 'price',
-      type: 'number',
-      required: true,
-      label: 'Price per Night',
-    },
-
-    {
-      name: 'size',
-      type: 'number',
-      label: 'Room Size (sq ft)',
-    },
-    {
       name: 'totalRooms',
       type: 'number',
       required: true,

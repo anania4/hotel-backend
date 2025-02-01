@@ -107,7 +107,6 @@ export interface Media {
  */
 export interface Room {
   id: string;
-  roomNumber: number;
   title: string;
   description?: {
     root: {
@@ -129,20 +128,12 @@ export interface Room {
   size: number;
   maxPerson: number;
   price: number;
-  availability?: boolean | null;
   images?:
     | {
         image: string | Media;
         id?: string | null;
       }[]
     | null;
-  seo?: {
-    metaTitle?: string | null;
-    metaDescription?: string | null;
-    metaKeywords?: string | null;
-  };
-  status?: ('available' | 'occupied' | 'maintenance') | null;
-  currentBooking?: (string | null) | Booking;
   updatedAt: string;
   createdAt: string;
 }
@@ -153,9 +144,6 @@ export interface Room {
 export interface Category {
   id: string;
   name: string;
-  description?: string | null;
-  price: number;
-  size?: number | null;
   totalRooms: number;
   updatedAt: string;
   createdAt: string;
@@ -178,6 +166,7 @@ export interface Facility {
  */
 export interface Booking {
   id: string;
+  roomNumber: number;
   guestName: string;
   guestEmail: string;
   room: string | Room;
@@ -298,7 +287,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "room_select".
  */
 export interface RoomSelect<T extends boolean = true> {
-  roomNumber?: T;
   title?: T;
   description?: T;
   category?: T;
@@ -306,22 +294,12 @@ export interface RoomSelect<T extends boolean = true> {
   size?: T;
   maxPerson?: T;
   price?: T;
-  availability?: T;
   images?:
     | T
     | {
         image?: T;
         id?: T;
       };
-  seo?:
-    | T
-    | {
-        metaTitle?: T;
-        metaDescription?: T;
-        metaKeywords?: T;
-      };
-  status?: T;
-  currentBooking?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -342,9 +320,6 @@ export interface FacilitiesSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
-  description?: T;
-  price?: T;
-  size?: T;
   totalRooms?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -354,6 +329,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "bookings_select".
  */
 export interface BookingsSelect<T extends boolean = true> {
+  roomNumber?: T;
   guestName?: T;
   guestEmail?: T;
   room?: T;
