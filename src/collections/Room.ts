@@ -8,13 +8,6 @@ export const Room: CollectionConfig = {
   },
   fields: [
     {
-      name: 'roomNumber',
-      type: 'number',
-      required: true,
-      unique: true,
-      label: 'Room Number',
-    },
-    {
       name: 'title',
       type: 'text',
       required: true,
@@ -28,6 +21,7 @@ export const Room: CollectionConfig = {
       type: 'relationship',
       relationTo: 'categories',
       required: true,
+     
     },
     {
       name: 'facilities',
@@ -54,12 +48,6 @@ export const Room: CollectionConfig = {
       required: true,
       defaultValue: 100,
       validate: (price: any) => price >= 0 || 'Price must be a positive value',
-    },
-    {
-      name: 'availability',
-      type: 'checkbox',
-      label: 'Is Available?',
-      defaultValue: true,
     },
     {
       name: 'images',
@@ -92,12 +80,6 @@ export const Room: CollectionConfig = {
       ],
       defaultValue: 'available',
       label: 'Room Status',
-    },
-    {
-      name: 'currentBooking',
-      type: 'relationship',
-      relationTo: 'bookings',
-      label: 'Current Booking',
     },
   ],
 }

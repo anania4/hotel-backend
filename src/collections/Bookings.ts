@@ -4,20 +4,19 @@ export const Bookings: CollectionConfig = {
     slug: 'bookings',
     fields: [
       {
-        name: 'guestName',
-        type: 'text',
+        name: 'guest',
+        type: 'relationship',
+        relationTo: 'room',
         required: true,
-      },
-      {
-        name: 'guestEmail',
-        type: 'email',
-        required: true,
+       
+        
       },
       {
         name: 'room',
         type: 'relationship',
         relationTo: 'room',
         required: true,
+         
       },
       {
         name: 'checkIn',
@@ -41,6 +40,3 @@ export const Bookings: CollectionConfig = {
       },
     ],
   };
-  
-  
-  
