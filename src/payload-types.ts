@@ -17,6 +17,7 @@ export interface Config {
     facilities: Facility;
     categories: Category;
     bookings: Booking;
+    guests: Guest;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -29,6 +30,7 @@ export interface Config {
     facilities: FacilitiesSelect<false> | FacilitiesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     bookings: BookingsSelect<false> | BookingsSelect<true>;
+    guests: GuestsSelect<false> | GuestsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -182,6 +184,19 @@ export interface Booking {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guests".
+ */
+export interface Guest {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -210,6 +225,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'bookings';
         value: string | Booking;
+      } | null)
+    | ({
+        relationTo: 'guests';
+        value: string | Guest;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -346,6 +365,18 @@ export interface BookingsSelect<T extends boolean = true> {
   checkIn?: T;
   checkOut?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guests_select".
+ */
+export interface GuestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  address?: T;
   updatedAt?: T;
   createdAt?: T;
 }

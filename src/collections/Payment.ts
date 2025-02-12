@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, Endpoint, PayloadHandler } from 'payload'
 
 export const Payment: CollectionConfig = {
   slug: 'payments',
@@ -48,24 +48,25 @@ export const Payment: CollectionConfig = {
   ],
   endpoints: [
     {
-      path: '/create-payment',
+      path: '/initiate-payment',
       method: 'post',
-      handler: async (req, res) => {
-        try {
-          const { amount, userId } = req.body;
-          
-          // Payment processing logic (e.g., integrating Stripe, PayPal, etc.)
-          const transactionId = `txn_${Date.now()}`;
+      handler: async (req) => {
 
-          const newPayment = await req.payload.create({
-            collection: 'payments',
-            data: { transactionId, amount, status: 'pending' },
-          });
+        //return Response.json({ error: 'not found' }, { status: 4 })
 
-          return res.status(200).json({ success: true, payment: newPayment });
-        } catch (error) {
-          return res.status(500).json({ success: false, error: error.message });
-        }
+        return Response.json({
+          message: `Hello`,
+        })
+      },
+    },
+    {
+      path: '/payment-verify',
+      method: 'post',
+      handler: async (req) => {
+        //return Response.json({ error: 'not found' }, { status: 4 })
+        return Response.json({
+          message: `Hello`,
+        })
       },
     },
   ],

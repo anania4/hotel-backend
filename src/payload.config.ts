@@ -13,6 +13,7 @@ import { Room } from "./collections/Room";
 import { Facilities } from './collections/Facilities'
 import { Categories } from './collections/Categories'
 import {Bookings} from './collections/Bookings'
+import { Guests } from './collections/Guest'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -25,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Room, Facilities , Categories,Bookings],
+  collections: [Users, Media, Room, Facilities , Categories,Bookings,Guests],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

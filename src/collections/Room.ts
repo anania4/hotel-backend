@@ -1,7 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
+
+
+
 export const Room: CollectionConfig = {
   slug: 'room',
+
   access: {
     read: () => true,
     readVersions: () => true
