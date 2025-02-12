@@ -14,14 +14,14 @@ export const Bookings: CollectionConfig = {
       type: 'relationship',
       relationTo: 'room',
       required: true,
-      maxDepth:3
+      //maxDepth: 3
     },
     {
       name: 'room',
       type: 'relationship',
       relationTo: 'room',
       required: true,
-       maxDepth:3
+      //maxDepth: 3
     },
     {
       name: 'checkIn',
@@ -43,6 +43,12 @@ export const Bookings: CollectionConfig = {
       ],
       defaultValue: 'pending',
     },
+    {
+      name: 'roomNo',
+      type: 'number',
+      defaultValue: 1,
+      max: 2
+    },
   ],
   hooks: {
     beforeChange: [
@@ -59,7 +65,7 @@ export const Bookings: CollectionConfig = {
           })
 
           data.guest = createdRelatedItem.id
-          
+
         }
 
         return data

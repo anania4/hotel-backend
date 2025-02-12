@@ -18,6 +18,7 @@ export interface Config {
     categories: Category;
     bookings: Booking;
     guests: Guest;
+    payments: Payment;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -31,6 +32,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     bookings: BookingsSelect<false> | BookingsSelect<true>;
     guests: GuestsSelect<false> | GuestsSelect<true>;
+    payments: PaymentsSelect<false> | PaymentsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -179,6 +181,7 @@ export interface Booking {
   checkIn: string;
   checkOut: string;
   status?: ('pending' | 'confirmed' | 'cancelled') | null;
+  roomNo?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -192,6 +195,21 @@ export interface Guest {
   email: string;
   phone: string;
   address: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payments".
+ */
+export interface Payment {
+  id: string;
+  booking: string | Booking;
+  amount: number;
+  paymentMethod: 'credit_card' | 'paypal' | 'bank_transfer';
+  status?: ('pending' | 'completed' | 'failed') | null;
+  transactionId: string;
+  date: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -229,6 +247,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'guests';
         value: string | Guest;
+      } | null)
+    | ({
+        relationTo: 'payments';
+        value: string | Payment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -365,6 +387,7 @@ export interface BookingsSelect<T extends boolean = true> {
   checkIn?: T;
   checkOut?: T;
   status?: T;
+  roomNo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -377,6 +400,20 @@ export interface GuestsSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
   address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payments_select".
+ */
+export interface PaymentsSelect<T extends boolean = true> {
+  booking?: T;
+  amount?: T;
+  paymentMethod?: T;
+  status?: T;
+  transactionId?: T;
+  date?: T;
   updatedAt?: T;
   createdAt?: T;
 }
